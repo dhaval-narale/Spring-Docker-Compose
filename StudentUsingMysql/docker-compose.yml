@@ -12,6 +12,8 @@ services:
       MYSQL_PASSWORD: student123
     ports:
       - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
@@ -29,3 +31,6 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/studentdb
       SPRING_DATASOURCE_USERNAME: student
       SPRING_DATASOURCE_PASSWORD: student123
+
+volumes:
+  mysql_data:
