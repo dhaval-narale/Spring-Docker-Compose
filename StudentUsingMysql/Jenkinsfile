@@ -1,0 +1,33 @@
+
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/dhaval-narale/Spring-Docker-Compose.git'
+            }
+        }
+
+        stage('Build App') {
+            steps {
+                
+                sh '''
+                    cd StudentUsingMysql
+                    mvn clean package -DskipTests
+                    '''
+            }
+        }
+
+        stage('Deploy with Docker Compose') {
+            steps {
+                sh '''
+                    cd StudentUsingMysql
+                    docker-compose down || true
+                    docker-compose up -d --build
+                '''
+            }
+        }
+    }
+
+}
